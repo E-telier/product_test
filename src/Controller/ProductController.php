@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\APIAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -32,7 +33,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/product", name="product")
      */
-    public function product(Request $request)
+    public function product(Request $request, APIAccess $API_access)
     {
 
         // CHECK CONNECTION //
@@ -51,8 +52,15 @@ class ProductController extends AbstractController
 
             $data = array('product_name' => $product_name, 'product_id' => $product_id, 'product_date' => $product_date, 'product_manager' => $product_manager);
 
-            // TODO API CALL
-             $result = 1;            
+            // API CALL
+            $result = $API_access->callAPI('POST', $request->getUriForPath('/rest/product'), http_build_query($data));            
+            if ($result !== false) {
+                $result = json_decode($result);                
+                $result = $result->result;
+            } else {
+                // TIMEOUT FALL BACK INTERNAL CALL
+                $result = 1;
+            }
             
         }
 
@@ -66,7 +74,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/sales", name="sales")
      */
-    public function sales(Request $request)
+    public function sales(Request $request, APIAccess $API_access)
     {
 
         // CHECK CONNECTION //
@@ -75,8 +83,14 @@ class ProductController extends AbstractController
             return $this->redirect("/");
         }
 
-        // TODO API CALL
-        $data = JSON_decode(file_get_contents('../assets/potato_sales.json'));        
+        // API CALL
+        $data = $API_access->callAPI('GET', $request->getUriForPath('/rest/sales'));
+        if (!empty($data)) {
+            $data = json_decode($data);
+        } else {
+            // TIMEOUT FALL BACK INTERNAL CALL
+            $data = JSON_decode(file_get_contents('../assets/potato_sales.json'));
+        }
 
         // add field property if missing //
         for ($i = 0; $i < count($data->column); $i++) {
