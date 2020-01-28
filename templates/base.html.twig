@@ -3,10 +3,39 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="#">{{ page_name }}</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            {% if fullname is defined %}
+                <span class="navbar-brand">{{ fullname }}</span>
+            {% endif %}
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                {% if page_name != "Logout" and page_name != "Login" %}                
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/logout">Logout</span></a>
+                    </li>     
+                {% endif %}          
+                </ul>
+                
+            </div>
+        </nav>
+
         {% block body %}{% endblock %}
+
+        <script src="/js/jquery-341.min.js"></script>
+        <script src="/js/bootstrap-441.min.js"></script>
         {% block javascripts %}{% endblock %}
+
+       
     </body>
 </html>

@@ -1,0 +1,36 @@
+table tr:first-child th {
+      vertical-align:middle;
+  }
+  table tr th[id*=total], 
+  table tr th[id*=sales],
+  table tr td:last-child {
+      text-align:center;
+  }
+
+  table tr th {
+      cursor:pointer;
+
+      -webkit-user-select: none; /* Safari */        
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+/Edge */
+      user-select: none; /* Standard */
+  }
+
+  table tr th,
+  table tr td {
+     border-left: 1px solid #dee2e6;
+  }
+  table {
+     border-right: 1px solid #dee2e6;
+     border-bottom: 1px solid #dee2e6;
+  }
+
+  table tr th.asc::after, 
+  table tr th.desc::after {
+      content:'▲';
+      display:inline-block;
+      margin-left:10px;
+  }
+  table tr th.desc::after {
+       content:'▼';
+  }

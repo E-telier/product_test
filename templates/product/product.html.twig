@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+
+    {%if result == 1 %}    
+        <h2>Data successfully proccessed!</h2>        
+    {% endif %}
+    {%if result == 0 %}    
+        <h2>ERROR : data could not be proccessed</h2>        
+    {% endif %}
+   
+    <form action="/product" method="post">
+        <fieldset>
+            <legend>Enter product data</legend>
+            
+            <div class="form-group">
+                <label for="inputProductName">Product name</label>
+                <input type="text" required class="form-control" maxlength="50" name="product_name" id="inputProductName" placeholder="Enter product name">
+            </div>
+
+            <div class="form-group">
+                <label for="inputID">Product ID</label>
+                <input type="number" required min="1" maxlength="13" class="form-control" name="product_id" id="inputID" placeholder="Enter product ID">
+            </div>
+
+            <div class="form-group">
+                <label for="inputProductManager">Product manager</label>
+                <input type="text" class="form-control" maxlength="30" name="product_manager" id="inputProductManager" placeholder="Enter product manager">
+            </div>
+
+            <div class="form-group">
+                <label for="inputProductDate">Product date</label>
+                <input type="date" required class="form-control" min="2020-01-01" name="product_date" id="inputProductDate" placeholder="Enter product date">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-primary">Clear</button>
+        </fieldset>
+    </form>
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="/js/input.js">/script>
+{% endblock %}

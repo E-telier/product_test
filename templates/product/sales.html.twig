@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/table.css">
+{% endblock %}
+
+{% block body %}
+    <table class="table table-hover sales">
+    <thead>
+        <tr>
+            {% for col in table.column %}
+                <th scope="col" id="{{ col.field }}" {% if col.subHeaders is defined %}colspan="{{ col.subHeaders | length }}"{% else %}rowspan="2"{% endif %}>{{ col.header }}</th>
+            {% endfor %}           
+        </tr>
+        <tr>
+            {% for col in table.column %}
+               
+                {% if col.subHeaders is defined %}
+                    {% for subcol in col.subHeaders %}
+                        <th scope="col" id="{{ subcol.field }}">{{ subcol.header }}</th>
+                    {% endfor %}                 
+                {% endif %}
+               
+            {% endfor %}           
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in table.data %}
+        <tr>
+            
+            {% for col in table.column %}
+               
+                {% if col.subHeaders is defined %}
+                    {% for subcol in col.subHeaders %}                       
+                        <td class="{{ subcol.field }}">{{ attribute(product, subcol.field) }}</td>
+                    {% endfor %}   
+                {% else %}                    
+                    <td class="{{ col.field }}">{{ attribute(product, col.field) }}</td>                    
+                {% endif %}
+              
+            {% endfor %} 
+
+        </tr>
+        {% endfor %}
+    </tbody>
+   
+    </table> 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/table.js"></script>
+{% endblock %}
