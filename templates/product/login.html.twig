@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+
+    {% block appendable %} {% endblock %}
+
+    {% if error is defined and error %}
+    <h2>Wrong login and/or password, please try again.</h2>
+    {% endif %}
+
+    <form action="/" method="post">
+        <fieldset>
+            <legend>Please log in</legend>
+            
+            <div class="form-group">
+                <label for="inputUsername">Username</label>
+                <input type="text" class="form-control" name="username" id="inputUsername" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Password">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </fieldset>
+    </form>
+    
+</div>
+{% endblock %}
